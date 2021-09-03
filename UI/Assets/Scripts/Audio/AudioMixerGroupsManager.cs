@@ -5,23 +5,18 @@ public class AudioMixerGroupsManager : MonoBehaviour
 {
   public AudioMixer MainAudioMixer;
 
-  private void Start()
+  public AudioMixerGroup GetAudioMixerGroup(AudioAssets.AudioType audioType)
   {
-
-  }
-
-  public AudioMixerGroup GetAudioMixerGroup(SoundAssets.SoundType soundType)
-  {
-    switch (soundType)
+    switch (audioType)
     {
-      case SoundAssets.SoundType.Ambience:
+      case AudioAssets.AudioType.Ambience:
         return MainAudioMixer.FindMatchingGroups("AmbiencesAudioMixerGroup")[0];
-      case SoundAssets.SoundType.Click:
+      case AudioAssets.AudioType.Click:
         return MainAudioMixer.FindMatchingGroups("ClicksAudioMixerGroup")[0];
-      case SoundAssets.SoundType.Swipe:
+      case AudioAssets.AudioType.Swipe:
         return MainAudioMixer.FindMatchingGroups("SwipesAudioMixerGroup")[0];
       default:
-        Debug.LogError("No AudioMixerGroup assigned to soundType");
+        Debug.LogError("No AudioMixerGroup assigned to audioType");
         return null;
     }
   }

@@ -6,23 +6,22 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
-public class SoundAssets : MonoBehaviour
+public class AudioAssets : MonoBehaviour
 {
 
   public class AudioClips
   {
     public AudioClip audioClip;
-    // Expand with pr. sound parameters here
   }
 
-  public enum SoundType
+  public enum AudioType
   {
     Ambience,
     Click,
     Swipe
   }
 
-  private static Dictionary<SoundAssets.SoundType, List<AudioClips>> AudioListsDict = new Dictionary<SoundAssets.SoundType, List<AudioClips>>();
+  private static Dictionary<AudioAssets.AudioType, List<AudioClips>> AudioListsDict = new Dictionary<AudioAssets.AudioType, List<AudioClips>>();
 
   void Awake()
   {
@@ -32,43 +31,46 @@ public class SoundAssets : MonoBehaviour
 
   void LoadAudioClipsListsIntoDict()
   {
-    foreach (SoundType soundType in Enum.GetValues(typeof(SoundType)))
+    foreach (AudioType AudioType in Enum.GetValues(typeof(AudioType)))
     {
-      if (!AudioListsDict.ContainsKey(soundType))
+      if (!AudioListsDict.ContainsKey(AudioType))
       {
         List<AudioClips> AudioClipsList = new List<AudioClips>();
-        switch (soundType)
+        switch (AudioType)
         {
-          case SoundType.Ambience:
+          case AudioType.Ambience:
             AudioClipsList = LoadAudioClipsFromFolderToList("Ambiences");
             break;
-          case SoundType.Click:
+          case AudioType.Click:
             AudioClipsList = LoadAudioClipsFromFolderToList("Clicks");
             break;
-          case SoundType.Swipe:
+          case AudioType.Swipe:
             AudioClipsList = LoadAudioClipsFromFolderToList("Swipes");
             break;
           default:
             break;
         }
-        AudioListsDict.Add(soundType, AudioClipsList);
+        AudioListsDict.Add(AudioType, AudioClipsList);
       }
     }
   }
 
   void LogListsCount()
   {
-    foreach (KeyValuePair<SoundAssets.SoundType, List<AudioClips>> entry in AudioListsDict)
+    foreach (KeyValuePair<AudioAssets.AudioType, List<AudioClips>> entry in AudioListsDict)
     {
-      print($"{entry.Key}: <color=red>{entry.Value.Count}</color>");
+      string AudioListName = entry.Key.ToString();
+      string NumberOfClipsInList = entry.Value.Count.ToString();
+      
+      print($"{AudioListName}: <color=red>{NumberOfClipsInList}</color>");
     }
   }
 
-  public static AudioClip GetClipInList(SoundType soundType)
+  public static AudioClip GetClipInList(AudioType AudioType)
   {
-    if (AudioListsDict.ContainsKey(soundType)) // currently always returns the 0 indexed clip
+    if (AudioListsDict.ContainsKey(AudioType))
     {
-      List<AudioClips> audioClipList = AudioListsDict[soundType];
+      List<AudioClips> audioClipList = AudioListsDict[AudioType];
       AudioClip clip = audioClipList[0].audioClip;
       return clip;
     }
@@ -90,38 +92,6 @@ public class SoundAssets : MonoBehaviour
     }
   }
 
-  // List<AudioClips> LoadAudioClipsFromFolderToList(string _FolderPath)
-  // {
-  //   // FolderPath relative to /Assets/Audio
-  //   string[] _FilesInFolder = GetWavFilesInFolder(_FolderPath);
-
-  //   var tempList = new List<AudioClips>();
-
-  //   for (int i = 0; i < _FilesInFolder.Length; i++)
-  //   {
-  //     var tempClip = new AudioClips();
-  //     StartCoroutine(GetAudioClip(_FilesInFolder[i], tempClip.audioClip));
-  //     tempList.Add(tempClip);
-  //   }
-  //   return tempList;
-  // }
-
-  // IEnumerator GetAudioClip(string PathToFile, AudioClip loadAudioClip)
-  // {
-  //   using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(PathToFile, AudioType.WAV))
-  //   {
-  //     yield return www.SendWebRequest();
-
-  //     if (www.result == UnityWebRequest.Result.ConnectionError)
-  //     {
-  //       Debug.Log(www.error);
-  //     }
-  //     else
-  //     {
-  //       loadAudioClip = DownloadHandlerAudioClip.GetContent(www);
-  //     }
-  //   }
-  // }
   List<AudioClips> LoadAudioClipsFromFolderToList(string _FolderPath)
   {
     // FolderPath relative to /Assets/Audio
@@ -138,21 +108,6 @@ public class SoundAssets : MonoBehaviour
     return tempList;
   }
 
-  // private string[] GetWavFilesInFolder(string _FolderName)
-  // {
-  //   string _pathToFolder = Application.dataPath + "/Resources/Audio/" + _FolderName;
-  //   // Application.dataPath returns: <path to project folder>/Assets
-  //   if (Directory.Exists(_pathToFolder))
-  //   {
-  //     string[] _FilesInFolder = Directory.GetFiles(_pathToFolder, "*.wav");
-  //     return _FilesInFolder;
-  //   }
-  //   else
-  //   {
-  //     Debug.LogError("Could not find folder with given name in path: /Resources/Audio");
-  //     return null;
-  //   }
-  // }
   private string[] GetOggFilesInFolder(string _FolderName)
   {
     string _pathToFolder = Application.dataPath + "/Resources/Audio/" + _FolderName;

@@ -45,14 +45,14 @@ public class BoxSliderClicker : MonoBehaviour
         if (SelectedBoxIndex != PreviousSelectedBoxIndex)
         {
           ChangeMaterials(SelectedBoxIndex);
-          SoundManager.StopSoundType(SoundAssets.SoundType.Click);
-          SoundManager.PlaySoundType(SoundAssets.SoundType.Click);
+          AudioManager.StopAudioType(AudioAssets.AudioType.Click);
+          AudioManager.PlayAudioType(AudioAssets.AudioType.Click);
         }
       }
     }
     if (Input.GetMouseButtonUp(0))
     {
-      SoundManager.StopSoundType(SoundAssets.SoundType.Click);
+      AudioManager.StopAudioType(AudioAssets.AudioType.Click);
     }
   }
 
