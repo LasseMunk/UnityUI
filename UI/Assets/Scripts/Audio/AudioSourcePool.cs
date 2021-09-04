@@ -7,16 +7,16 @@ public class AudioSourcePool : MonoBehaviour
 {
 
   [Header("Amp. Env. in seconds")]
-  [SerializeField, Range(0f, 2f)] private static double _attackTime;
-  [SerializeField, Range(0f, 2f)] private static double _sustainTime;
-  [SerializeField, Range(0f, 2f)] private static double _releaseTime;
+  [SerializeField, Range(0f, 2f)] private double _attackTime;
+  [SerializeField, Range(0f, 2f)] private double _sustainTime;
+  [SerializeField, Range(0f, 2f)] private double _releaseTime;
   [SerializeField] GameObject audioSourcePrefab;
 
-  readonly static int _audioSourcesInPool = 8;
-  private static int _nextAudioSourceIndex = 0;
-  private static bool _voiceStealingEnabled = true;
-  private static List<AudioSourceVoice> _audioSourceVoices;
-  private static Dictionary<AudioAssets.AudioType, AudioSource> _audioSourceAllocator = new Dictionary<AudioAssets.AudioType, AudioSource>();
+  private readonly int _audioSourcesInPool = 8;
+  private int _nextAudioSourceIndex = 0;
+  private bool _voiceStealingEnabled = true;
+  private List<AudioSourceVoice> _audioSourceVoices;
+  private Dictionary<AudioAssets.AudioType, AudioSource> _audioSourceAllocator = new Dictionary<AudioAssets.AudioType, AudioSource>();
 
 
   void Start()
@@ -34,7 +34,7 @@ public class AudioSourcePool : MonoBehaviour
     }
   }
 
-  public static void PlayAudioTypeASRenvelope(AudioAssets.AudioType audioType, AudioClip audioClip, AudioMixerGroup audioMixerGroup)
+  public void PlayAudioTypeASRenvelope(AudioAssets.AudioType audioType, AudioClip audioClip, AudioMixerGroup audioMixerGroup)
   {
 
     _nextAudioSourceIndex = GetNextAvailableAudioSourceIndex();
@@ -44,7 +44,7 @@ public class AudioSourcePool : MonoBehaviour
 
   }
 
-  private static int GetNextAvailableAudioSourceIndex()
+  private int GetNextAvailableAudioSourceIndex()
   {
     if (_voiceStealingEnabled)
     {
@@ -68,7 +68,7 @@ public class AudioSourcePool : MonoBehaviour
     }
   }
 
-  public static void StopAudioType(AudioAssets.AudioType audioType)
+  public void StopAudioType(AudioAssets.AudioType audioType)
   {
     if (_audioSourceAllocator.ContainsKey(audioType))
     {

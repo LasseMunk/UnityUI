@@ -1,13 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioSourceVoice : MonoBehaviour
 {
-
-  public bool isPlaying = false;
-
+  // private bool isPlaying = false;
   private readonly ASREnvelope _envelope = new ASREnvelope();
   private AudioSource _audioSource;
 
@@ -19,27 +17,38 @@ public class AudioSourceVoice : MonoBehaviour
   public void Play(AudioClip audioClip, double attackTime, double sustainTime, double releaseTime, AudioMixerGroup audioMixerGroup)
   {
     // isPlaying = true;
+    _envelope.Reset(attackTime, sustainTime, releaseTime, AudioSettings.outputSampleRate);
     _audioSource.clip = audioClip;
     _audioSource.outputAudioMixerGroup = audioMixerGroup;
     double nonNegativeSustainTime = (sustainTime > attackTime) ? (sustainTime - attackTime) : 0.0;
     sustainTime = nonNegativeSustainTime;
-    _envelope.Reset(attackTime, sustainTime, releaseTime, AudioSettings.outputSampleRate);
+    _audioSource.Play();
   }
 
-  public void Stop()
-  {
-    // isPlaying = false;
-  }
+  // public void Stop()
+  // {
+  //   // isPlaying = false;
+  // }
+
+  // public bool GetIsPlaying()
+  // {
+  //   return isPlaying;
+  // }
+
+  // public void SetIsPlaying(bool setIsPlaying)
+  // {
+  //   isPlaying = setIsPlaying;
+  // }
 
   private void OnAudioFilterRead(float[] buffer, int numChannels)
   {
-    for (int sampleIndex = 0; sampleIndex < buffer.Length; sampleIndex += numChannels)
+    for (int sIdx = 0; sIdx < buffer.Length; sIdx += numChannels)
     {
       double volume = _envelope.GetLevel();
 
-      for (int channelIndex = 0; channelIndex < numChannels; channelIndex++)
+      for (int cIdx = 0; cIdx < numChannels; ++cIdx)
       {
-        buffer[sampleIndex + channelIndex] *= (float)volume;
+        buffer[sIdx + cIdx] *= (float)volume;
       }
     }
   }

@@ -1,18 +1,27 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public static class AudioManager
+public class AudioManager : MonoBehaviour
 {
-  static AudioMixerGroupsManager _audioMixerGroupsManager = GameObject.FindGameObjectWithTag("AudioMaster").GetComponent<AudioMixerGroupsManager>();
+  static AudioMixerGroupsManager _audioMixerGroupsManager;
+  static AudioSourcePool _audioSourcePool;
+  static AudioAssets _audioAssets;
 
-  public static void PlayAudioType(AudioAssets.AudioType audioType)
+  private void Awake()
+  {
+    _audioMixerGroupsManager = GetComponent<AudioMixerGroupsManager>();
+    _audioSourcePool = GetComponent<AudioSourcePool>();
+    _audioAssets = GetComponent<AudioAssets>();
+  }
+
+  public void PlayAudioType(AudioAssets.AudioType audioType)
   {
     AudioMixerGroup audioMixerGroup = _audioMixerGroupsManager.GetAudioMixerGroup(audioType);
-    AudioClip audioClip = AudioAssets.GetClipInList(audioType);
+    AudioClip audioClip = _audioAssets.GetClipInList(audioType);
 
     if (audioClip != null && audioMixerGroup != null)
     {
-      AudioSourcePool.PlayAudioTypeASRenvelope(audioType, audioClip, audioMixerGroup);
+      _audioSourcePool.PlayAudioTypeASRenvelope(audioType, audioClip, audioMixerGroup);
     }
     else
     {
@@ -20,13 +29,13 @@ public static class AudioManager
     }
   }
 
-  public static void PlayOneShot(AudioAssets.AudioType audioType)
+  public void PlayOneShot(AudioAssets.AudioType audioType)
   {
 
   }
 
-  public static void StopAudioType(AudioAssets.AudioType audioType)
+  public void StopAudioType(AudioAssets.AudioType audioType)
   {
-    AudioSourcePool.StopAudioType(audioType);
+    _audioSourcePool.StopAudioType(audioType);
   }
 }

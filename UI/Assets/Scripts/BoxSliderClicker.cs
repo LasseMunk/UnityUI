@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class BoxSliderClicker : MonoBehaviour
 {
+
+  AudioManager _audioManager;
+
   Transform _boxSliderTransform;
   Camera _mainCamera;
   RaycastHit RaycastedBox;
@@ -22,6 +25,9 @@ public class BoxSliderClicker : MonoBehaviour
   {
     _mainCamera = Camera.main;
     _boxSliderTransform = gameObject.transform;
+
+    _audioManager = GameObject.FindGameObjectsWithTag("AudioMaster")[0].GetComponent<AudioManager>();
+
   }
 
   void Start()
@@ -45,14 +51,14 @@ public class BoxSliderClicker : MonoBehaviour
         if (SelectedBoxIndex != PreviousSelectedBoxIndex)
         {
           ChangeMaterials(SelectedBoxIndex);
-          AudioManager.StopAudioType(AudioAssets.AudioType.Click);
-          AudioManager.PlayAudioType(AudioAssets.AudioType.Click);
+          _audioManager.StopAudioType(AudioAssets.AudioType.Click);
+          _audioManager.PlayAudioType(AudioAssets.AudioType.Click);
         }
       }
     }
     if (Input.GetMouseButtonUp(0))
     {
-      AudioManager.StopAudioType(AudioAssets.AudioType.Click);
+      _audioManager.StopAudioType(AudioAssets.AudioType.Click);
     }
   }
 

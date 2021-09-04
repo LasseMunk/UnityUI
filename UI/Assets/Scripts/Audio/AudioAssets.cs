@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 public class AudioAssets : MonoBehaviour
@@ -61,12 +59,12 @@ public class AudioAssets : MonoBehaviour
     {
       string AudioListName = entry.Key.ToString();
       string NumberOfClipsInList = entry.Value.Count.ToString();
-      
+
       print($"{AudioListName}: <color=red>{NumberOfClipsInList}</color>");
     }
   }
 
-  public static AudioClip GetClipInList(AudioType AudioType)
+  public AudioClip GetClipInList(AudioType AudioType)
   {
     if (AudioListsDict.ContainsKey(AudioType))
     {

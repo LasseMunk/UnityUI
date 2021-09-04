@@ -41,14 +41,12 @@ public class ASREnvelope
           _outputLevel = 1.0;
           _state = State.Sustain;
         }
-
         break;
       case State.Sustain:
         if ((_sustainSamples == 0) || (--_sustainSamples == 0))
         {
           _state = State.Release;
         }
-
         break;
       case State.Release:
         _outputLevel -= _releaseIncrement;
@@ -58,7 +56,6 @@ public class ASREnvelope
           _outputLevel = 0.0;
           _state = State.Idle;
         }
-
         break;
       default:
         Debug.LogError("Wrong argument / state passed to ASREnvelope");

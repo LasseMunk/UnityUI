@@ -175,9 +175,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 294496216}
-  - component: {fileID: 294496215}
-  - component: {fileID: 294496214}
+  - component: {fileID: 294496218}
   - component: {fileID: 294496217}
+  - component: {fileID: 294496214}
+  - component: {fileID: 294496215}
   m_Layer: 0
   m_Name: AudioMaster
   m_TagString: AudioMaster
@@ -209,6 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbdfdd1e6a1f34f69b551e0324cf1992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackTime: 0.23000000417232513
+  _sustainTime: 0.49000000953674316
+  _releaseTime: 1.399999976158142
   audioSourcePrefab: {fileID: 4515926903272548720, guid: 4dc4ffbc5b43f46dd87019a50bf26191, type: 3}
 --- !u!4 &294496216
 Transform:
@@ -237,6 +241,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainAudioMixer: {fileID: 24100000, guid: b3e89f775c13b4a6885c56f16d8ddd3c, type: 2}
+--- !u!114 &294496218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294496213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8edd9cc1940a64ba4b82a995924d7f04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &438025832
 GameObject:
   m_ObjectHideFlags: 0
