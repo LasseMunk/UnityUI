@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class AudioSourcePool : MonoBehaviour
   [SerializeField, Range(0f, 2f)] private double _attackTime;
   [SerializeField, Range(0f, 2f)] private double _sustainTime;
   [SerializeField, Range(0f, 2f)] private double _releaseTime;
+  [SerializeField, Range(0.125f, 2f)] private float _pitchOffset;
+
+
   [SerializeField] GameObject audioSourcePrefab;
 
   private readonly int _audioSourcesInPool = 8;
@@ -34,14 +38,26 @@ public class AudioSourcePool : MonoBehaviour
     }
   }
 
-  public void PlayAudioTypeASRenvelope(AudioAssets.AudioType audioType, AudioClip audioClip, AudioMixerGroup audioMixerGroup)
+  public void PlayAudioTypeASRenvelope(AudioAssets.AudioType audioType, AudioClip audioClip, int pitchMultiplier, AudioMixerGroup audioMixerGroup)
   {
 
     _nextAudioSourceIndex = GetNextAvailableAudioSourceIndex();
-    _audioSourceVoices[_nextAudioSourceIndex].Play(audioClip, _attackTime, _sustainTime, _releaseTime, audioMixerGroup);
+    float nextPitch = CalculatePitchDependingOnMultiplier(pitchMultiplier);
+
+    _audioSourceVoices[_nextAudioSourceIndex].Play(audioClip, _attackTime, _sustainTime, _releaseTime, nextPitch, audioMixerGroup);
+
     // allocate audio source
     // play
 
+  }
+
+  private float CalculatePitchDependingOnMultiplier(int pitchMultiplier)
+  {
+
+    float pitchMultiplierOffset = (float)pitchMultiplier + 1;
+    float nextPitch = 1 * (pitchMultiplierOffset / 8f) + _pitchOffset;
+
+    return nextPitch;
   }
 
   private int GetNextAvailableAudioSourceIndex()

@@ -210,9 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbdfdd1e6a1f34f69b551e0324cf1992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackTime: 0.23000000417232513
-  _sustainTime: 0.49000000953674316
-  _releaseTime: 1.399999976158142
+  _attackTime: 0
+  _sustainTime: 0.10000000149011612
+  _releaseTime: 0.11999999731779099
+  _pitchOffset: 0.24
   audioSourcePrefab: {fileID: 4515926903272548720, guid: 4dc4ffbc5b43f46dd87019a50bf26191, type: 3}
 --- !u!4 &294496216
 Transform:

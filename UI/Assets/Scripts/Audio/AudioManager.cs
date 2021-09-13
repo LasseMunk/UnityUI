@@ -14,14 +14,14 @@ public class AudioManager : MonoBehaviour
     _audioAssets = GetComponent<AudioAssets>();
   }
 
-  public void PlayAudioType(AudioAssets.AudioType audioType)
+  public void PlayAudioType(AudioAssets.AudioType audioType, int pitchMultiplier)
   {
     AudioMixerGroup audioMixerGroup = _audioMixerGroupsManager.GetAudioMixerGroup(audioType);
     AudioClip audioClip = _audioAssets.GetClipInList(audioType);
 
     if (audioClip != null && audioMixerGroup != null)
     {
-      _audioSourcePool.PlayAudioTypeASRenvelope(audioType, audioClip, audioMixerGroup);
+      _audioSourcePool.PlayAudioTypeASRenvelope(audioType, audioClip, pitchMultiplier, audioMixerGroup);
     }
     else
     {

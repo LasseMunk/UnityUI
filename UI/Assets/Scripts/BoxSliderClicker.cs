@@ -52,7 +52,7 @@ public class BoxSliderClicker : MonoBehaviour
         {
           ChangeMaterials(SelectedBoxIndex);
           _audioManager.StopAudioType(AudioAssets.AudioType.Click);
-          _audioManager.PlayAudioType(AudioAssets.AudioType.Click);
+          _audioManager.PlayAudioType(AudioAssets.AudioType.Click, SelectedBoxIndex);
         }
       }
     }
